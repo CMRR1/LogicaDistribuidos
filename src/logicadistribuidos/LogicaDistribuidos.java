@@ -22,13 +22,13 @@ import negociodistribuidos.Tutor;
 
 /**
  *
- * @author ceccy
+ * @author migue
  */
 public class LogicaDistribuidos {
 
     public static final String URL = "jdbc:mysql://localhost:3306/distribuidos?useTimezone=true&serverTimezone=UTC";
     public static final String user = "root";
-    public static final String pass = "root";
+    public static final String pass = "1235";
     Tutor tuto = null;
 
     //Sentencia que se le envía al manejador de la base de datos para ejecutar un SP
