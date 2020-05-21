@@ -18,6 +18,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.net.ServerSocket;
 import negociodistribuidos.Asignacion;
+import negociodistribuidos.Calificacion;
 import negociodistribuidos.Tutor;
 
 /**
@@ -159,8 +160,42 @@ public class LogicaDistribuidos {
                         int id_asignacion = in2.readInt();
                         out.writeInt(id_asignacion);
                         boolean respuesta = in.readBoolean();
-                        out2.writeBoolean(respuesta);
+                        System.out.println(respuesta);
+                        //out2.writeBoolean(respuesta);
                         System.out.println("ENVIE LA PETICION DE REVISION");
+                        sc.close();
+                        break;
+                        
+                    }
+                    case 4:{
+                        System.out.println("LOGICA DE CALIFICACION");
+                        String hostBD = "127.0.0.1";
+                        int puertoBD = 5000;
+                        Socket sc = new Socket(hostBD, puertoBD);
+                        System.out.println("CREE EL SOCKET A LA BD");
+                        DataInputStream in = new DataInputStream(sc.getInputStream());
+                        DataOutputStream out = new DataOutputStream(sc.getOutputStream());
+                        ObjectInputStream objIn = new ObjectInputStream(sc.getInputStream());
+                        System.out.println("CREE LOS OBJETOS DE MOVIMIENTOS DE DATOS");
+                        out.writeInt(opcion);
+                        int id_alumno = in2.readInt();
+                        System.out.println("ENVIE EL ID");
+                        out.writeInt(id_alumno);
+                        int size = in.readInt();
+                        int cont = size;
+                        ArrayList<Calificacion> califs = new ArrayList<Calificacion>();
+                        out2.writeInt(size);
+                        while(cont>0){
+                            Calificacion calif = (Calificacion) objIn.readObject();
+                            califs.add(calif);
+                            System.out.println(calif.getCurso());
+                            cont--;
+                        }
+                        for (Calificacion calif : califs) {
+                            objOut.writeObject(calif);
+                        }
+                         //Se cierra el socket del servidor
+                        System.out.println("Fin");
                         sc.close();
                         break;
                         
